@@ -1,0 +1,7 @@
+.bg-main {
+    background-color: #f3eaf1;
+}
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: black;
+}

@@ -14,11 +14,13 @@
 
 <body>
     <!-- Header Section -->
-    <div class="bg-light">
+    <div class="bg-main">
         <div class="container">
             <div class="row">
-                <nav class="col navbar navbar-expand-md bg-light navbar-light">
-                    <a class="navbar-brand" href="index.html">Orinoco</a>
+                <nav class="col navbar navbar-expand-md bg-main navbar-light">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="../Orinoco/images/logo.png" height="40px" alt="Orinoco Logo" id="logo">
+                    </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -38,25 +40,46 @@
     </div>
 
     <!-- Main Section -->
-    <div class="container">MAIN
-    </div>
-
-    <!-- Footer Section -->
-    <div class="bg-light">
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <ul class="list-inline text-center">
-                    <li class="list-inline-item"><a href="#">About Us</a></li>
-                    <li class="list-inline-item">&middot;</li>
-                    <li class="list-inline-item"><a href="#">Privacy</a></li>
-                    <li class="list-inline-item">&middot;</li>
-                    <li class="list-inline-item"><a href="#">Terms</a></li>
-                </ul>
+        <div class="row main">
+            <div class="col-12">
+                <h1>Available products:</h1>
+            </div>
+            <a href="#">
+                <div class="col-12 col-md-6 col-lg-4 card">
+                    <img class="card-img-top" src="../Orinoco/images/vcam_1.jpg" alt="...">
+                    <div class="card-body">
+                        <h2 class="card-title">Name of Product</h2>
+                    </div>
+                </div>
+            </a>
+            <div class="col-12 col-md-6 col-lg-4 card">
+                <a href="#">
+                    <img class="card-img-top" src="../Orinoco/images/vcam_1.jpg" alt="...">
+                    <div class="card-body">
+                        <h2 class="card-title">Name of Product</h2>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Footer Section -->
+    <div class="bg-main">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"><a href="#">About Us</a></li>
+                        <li class="list-inline-item">&middot;</li>
+                        <li class="list-inline-item"><a href="#">Privacy</a></li>
+                        <li class="list-inline-item">&middot;</li>
+                        <li class="list-inline-item"><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery, Popper.js, Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -68,6 +91,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="scripts.js"></script>
 </body>
 
 </html>
