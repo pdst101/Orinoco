@@ -21,14 +21,14 @@ function makeRequest() {
 makeRequest();
 
 // Populate product card
-async function populateProductCard() {
-    const productCard = document.querySelector('.main');
-    const apiRequest = makeRequest();
-    const dataArray = await apiRequest;
-    for (let i in dataArray) {
+async function populateProductCards() {
+    const productCard = document.getElementById('main');
+    const result = makeRequest();
+    const dataArray = await result;
+    for (let i = 0; i < dataArray.length; i++) {
     //Outer card div
     const newDiv = document.createElement('div');
-    newDiv.classList.add('col-12', 'col-md-6', 'col-lg-4', 'card');
+    newDiv.classList.add('col-12', 'col-md-6', 'col-lg-4', 'card', 'card-block', 'd-flex');
     productCard.appendChild(newDiv);
     //Link to product page
     const link = document.createElement('a');
@@ -37,8 +37,17 @@ async function populateProductCard() {
     //Product Picture
     const picture = document.createElement('img');
     picture.classList.add('card-img-top');
-    picture.setAttribute('src', dataArray[i].imageURL);
+    picture.setAttribute('src', dataArray[i].imageUrl);
     link.appendChild(picture);
-    }
+    //Card body
+    const card = document.createElement('div');
+    card.classList.add('card-body', 'bg-main');
+    link.appendChild(card);
+    //Card title
+    const title = document.createElement('h4');
+    title.classList.add('card-title', 'text-center');
+    title.innerHTML = dataArray[i].name + " - " + dataArray[i].price/100 + '$';
+    card.appendChild(title);
+    };
 };
-populateProductCard();
+populateProductCards();
