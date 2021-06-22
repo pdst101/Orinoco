@@ -17,6 +17,3 @@ a:hover, a:visited, a:link, a:active {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-img {
-    object-fit: cover;
-}
