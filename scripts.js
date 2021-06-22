@@ -88,13 +88,19 @@ async function displayProduct() {
             details.appendChild(description);
             //Product type dropdown
             const lense = dataArray[i].lenses;
-            const form = document.createElement('form');
-            details.appendChild(form);
-            const formGroup = document.createElement('div');
-            form.appendChild(formGroup);
+            const selectType = document.createElement('select');
+            selectType.classList.add('custom-select');
+            details.appendChild(selectType);
+            const chooseOption = document.createElement('option');
+            chooseOption.innerHTML = 'Choose lense...';
+            selectType.appendChild(chooseOption);
+            //Loop for lense options
             for (let i = 0; i < lense.length; i++) {
-
-            }
+                const lenseType = document.createElement('option');
+                lenseType.innerHTML = lense[i];
+                selectType.appendChild(lenseType);
+            };
+            //Quantity input
         };
     };
 
