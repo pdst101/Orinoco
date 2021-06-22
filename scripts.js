@@ -86,6 +86,15 @@ async function displayProduct() {
             const description = document.createElement('p');
             description.innerHTML = dataArray[i].description;
             details.appendChild(description);
+            //Product type dropdown
+            const lense = dataArray[i].lenses;
+            const form = document.createElement('form');
+            details.appendChild(form);
+            const formGroup = document.createElement('div');
+            form.appendChild(formGroup);
+            for (let i = 0; i < lense.length; i++) {
+
+            }
         };
     };
 
