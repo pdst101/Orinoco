@@ -57,55 +57,179 @@ async function displayProduct() {
     const currentId = link.split('id=')[1];
     for (let i = 0; i < dataArray.length; i++) {
         if (currentId === dataArray[i]._id) {
-            //Check
-            console.log(currentId)
-            console.log(dataArray[i]._id)
+
+            //Catch Element
             const productPage = document.getElementById('product-page');
+
             //Product Picture
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-12', 'col-md-6');
             productPage.appendChild(newDiv);
             const picture = document.createElement('img');
             picture.classList.add('w-100', 'w-md-50');
+            picture.setAttribute('id', 'picture')
             picture.setAttribute('src', dataArray[i].imageUrl);
             newDiv.appendChild(picture);
-            //Product details
+
+            //Product Details
             const details = document.createElement('div');
             details.classList.add('col-12', 'col-md-6');
             productPage.appendChild(details);
-            //Product title
+
+            //Product Title
             const title = document.createElement('h4');
+            title.setAttribute('id', 'title')
             title.innerHTML = dataArray[i].name;
             details.appendChild(title);
-            //Product price
+
+            //Product Price
             const price = document.createElement('p');
             price.innerHTML = dataArray[i].price / 100 + '$';
+            price.setAttribute('id', 'price')
             price.classList.add('text-success');
             details.appendChild(price);
-            //Product description
+
+            //Product Description
             const description = document.createElement('p');
             description.innerHTML = dataArray[i].description;
             details.appendChild(description);
+
             //Product type dropdown
-            const lense = dataArray[i].lenses;
             const selectType = document.createElement('select');
             selectType.classList.add('custom-select');
+            selectType.setAttribute('id', 'lense');
             details.appendChild(selectType);
             const chooseOption = document.createElement('option');
-            chooseOption.innerHTML = 'Choose lense...';
-            selectType.appendChild(chooseOption);
+            const lense = dataArray[i].lenses;
             //Loop for lense options
             for (let i = 0; i < lense.length; i++) {
                 const lenseType = document.createElement('option');
                 lenseType.innerHTML = lense[i];
                 selectType.appendChild(lenseType);
             };
+
             //Quantity input
+            const counter = document.createElement('div');
+            counter.classList.add('qty', 'mt-2');
+            details.appendChild(counter);
+            //Minus
+            const minus = document.createElement('input');
+            minus.classList.add('minus', 'bg-main');
+            minus.setAttribute('type', 'button');
+            minus.setAttribute('value', '-');
+            minus.setAttribute('onclick', 'deduct()');
+            counter.appendChild(minus);
+            //Input
+            const counterInput = document.createElement('input');
+            counterInput.classList.add('count');
+            counterInput.setAttribute('type', 'number');
+            counterInput.setAttribute('value', count);
+            counter.appendChild(counterInput);
+            //Plus
+            const plus = document.createElement('input');
+            plus.classList.add('plus', 'bg-main');
+            plus.setAttribute('type', 'button');
+            plus.setAttribute('value', '+');
+            plus.setAttribute('onclick', 'add()');
+            counter.appendChild(plus);
+
+            //Add to cart button
+            const addButton = document.createElement('button');
+            addButton.classList.add('btn', 'btn-success', 'my-3', 'px-5');
+            addButton.setAttribute('type', 'submit');
+            addButton.innerHTML = 'Add to cart';
+            addButton.setAttribute('onclick', 'addToCart()');
+            details.appendChild(addButton);
         };
     };
-
 };
-
 displayProduct();
 
+// Quantity counter
+let count = 1;
+let counterInput = document.getElementsByClassName('count')
+function add() {
+    count++;
+    counterInput[0].value = count;
+};
+function deduct() {
+    if (count > 1) {
+        count--;
+        counterInput[0].value = count;
+    };
+};
+//Add to cart (add to local storage)
+function addToCart() {
+    const link = window.location.href;
+    const id = link.split('id=')[1];
+    const quantity = count;
+    const lense = document.getElementById('lense').value;
+    const title = document.getElementById('title').textContent;
+    const picture = document.getElementById('picture').src;
+    let item = {
+        id: id,
+        lense: lense,
+        quantity: quantity,
+        title: title,
+        picture: picture,
+    };
+    let cart = localStorage;
+    if (cart === null) {
+        localStorage.setItem('item0', JSON.stringify(item));
+    } else {
+        localStorage.setItem('item' + cart.length, JSON.stringify(item));
+    };
+    console.log(localStorage);
+};
 
+//Populating items from local storage in cart
+function displayCart () {
+    for (let i = 0; i < localStorage.lenght; i++) {
+        let data = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        console.log(data);
+
+        //Catch element
+        const cart = getElementById('chosenItems');
+
+        //Create div for items list
+        const itemList = document.createElement('div');
+        itemList.classList.add('row');
+        cart.appendChild(itemList);
+
+        //Populate item picture
+        const itemPicture = document.createElement('div');
+        itemPicture.classList.add('col-2');
+        itemList.appendChild(itemPicture);
+
+        //Populate item name
+        const itemName = document.createElement('div');
+        itemName.classList.add('col-2');
+        itemList.appendChild(itemName);
+
+        //Populate item lense type
+        const itemLense = document.createElement('div');
+        itemLense.classList.add('col-2');
+        itemList.appendChild(itemLense);
+
+        //Populate item quantity
+        const itemQuantity = document.createElement('div');
+        itemQuantity.classList.add('col-2');
+        itemList.appendChild(itemQuantity);
+
+        //Populate item price
+        const itemPrice = document.createElement('div');
+        itemPrice.classList.add('col-2');
+        itemList.appendChild(itemPrice);
+
+        //Delete item
+        const itemDelete = document.createElement('div');
+        itemDelete.classList.add('col-2');
+        itemList.appendChild(itemDelete);
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-danger', 'text-light');
+        deleteButton.innerHTML = 'Remove item';
+        itemDelete.appendChild(deleteButton);
+
+    };
+};
+displayCart();
