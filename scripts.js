@@ -166,12 +166,14 @@ function addToCart() {
     const lense = document.getElementById('lense').value;
     const title = document.getElementById('title').textContent;
     const picture = document.getElementById('picture').src;
+    const price = document.getElementById('price').textContent;
     let item = {
         id: id,
         lense: lense,
         quantity: quantity,
         title: title,
         picture: picture,
+        price: price,
     };
     let cart = localStorage;
     if (cart === null) {
@@ -179,17 +181,18 @@ function addToCart() {
     } else {
         localStorage.setItem('item' + cart.length, JSON.stringify(item));
     };
-    console.log(localStorage);
+    // console.log(localStorage);
 };
 
 //Populating items from local storage in cart
-function displayCart () {
-    for (let i = 0; i < localStorage.lenght; i++) {
+function displayCart() {
+    let removeItem = document.getElementsByClassName('btn-danger')
+    for (let i = 0; i < localStorage.length; i++) {
         let data = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        console.log(data);
+        // console.log(data);
 
         //Catch element
-        const cart = getElementById('chosenItems');
+        const cart = document.getElementById('chosenItems');
 
         //Create div for items list
         const itemList = document.createElement('div');
@@ -197,39 +200,52 @@ function displayCart () {
         cart.appendChild(itemList);
 
         //Populate item picture
-        const itemPicture = document.createElement('div');
-        itemPicture.classList.add('col-2');
+        const itemPicture = document.createElement('img');
+        itemPicture.setAttribute('src', data.picture);
+        itemPicture.classList.add('col-2', 'm-auto');
         itemList.appendChild(itemPicture);
 
-        //Populate item name
-        const itemName = document.createElement('div');
-        itemName.classList.add('col-2');
-        itemList.appendChild(itemName);
+        //Populate item title
+        const itemTitle = document.createElement('div');
+        itemTitle.classList.add('col-2', 'm-auto');
+        itemTitle.innerHTML = data.title;
+        itemList.appendChild(itemTitle);
 
         //Populate item lense type
         const itemLense = document.createElement('div');
-        itemLense.classList.add('col-2');
+        itemLense.classList.add('col-2', 'm-auto');
+        itemLense.innerHTML = data.lense;
         itemList.appendChild(itemLense);
 
         //Populate item quantity
         const itemQuantity = document.createElement('div');
-        itemQuantity.classList.add('col-2');
+        itemQuantity.classList.add('col-2', 'm-auto');
+        itemQuantity.innerHTML = data.quantity;
         itemList.appendChild(itemQuantity);
 
         //Populate item price
         const itemPrice = document.createElement('div');
-        itemPrice.classList.add('col-2');
+        itemPrice.classList.add('col-2', 'm-auto');
+        itemPrice.innerHTML = data.price;
         itemList.appendChild(itemPrice);
 
-        //Delete item
+        //Delete item button
         const itemDelete = document.createElement('div');
-        itemDelete.classList.add('col-2');
+        itemDelete.classList.add('col-2', 'm-auto');
         itemList.appendChild(itemDelete);
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('btn', 'btn-danger', 'text-light');
         deleteButton.innerHTML = 'Remove item';
         itemDelete.appendChild(deleteButton);
 
+        //Onlick removing item from local storage and element
+        let removeButton = removeItem[i];
+        removeButton.addEventListener('click', function(event) {
+            let clickedButton = event.target;
+            clickedButton.parentElement.parentElement.remove();
+            localStorage.removeItem(localStorage.key(i));
+            window.location.reload();
+        });
     };
 };
 displayCart();
