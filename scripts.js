@@ -196,13 +196,13 @@ function displayCart() {
 
         //Create div for items list
         const itemList = document.createElement('div');
-        itemList.classList.add('row');
+        itemList.classList.add('row', 'py-1');
         cart.appendChild(itemList);
 
         //Populate item picture
         const itemPicture = document.createElement('img');
         itemPicture.setAttribute('src', data.picture);
-        itemPicture.classList.add('col-2', 'm-auto');
+        itemPicture.classList.add('col-md-2', 'col-3', 'm-auto');
         itemList.appendChild(itemPicture);
 
         //Populate item title
@@ -219,7 +219,7 @@ function displayCart() {
 
         //Populate item quantity
         const itemQuantity = document.createElement('div');
-        itemQuantity.classList.add('col-2', 'm-auto');
+        itemQuantity.classList.add('col-md-2', 'col-1', 'm-auto');
         itemQuantity.innerHTML = data.quantity;
         itemList.appendChild(itemQuantity);
 
@@ -234,8 +234,7 @@ function displayCart() {
         itemDelete.classList.add('col-2', 'm-auto');
         itemList.appendChild(itemDelete);
         const deleteButton = document.createElement('button');
-        deleteButton.classList.add('btn', 'btn-danger', 'text-light');
-        deleteButton.innerHTML = 'Remove item';
+        deleteButton.classList.add('btn-danger', 'btn-close');
         itemDelete.appendChild(deleteButton);
 
         //Onlick removing item from local storage and element
