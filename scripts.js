@@ -11,7 +11,7 @@ function makeRequest() {
                 if (apiRequest.status === 200) {
                     resolve(JSON.parse(apiRequest.response));
                 } else {
-                    reject(JSON.parse(apiRequest.response));
+                    reject(alert('Cannot connect to server'));
                 }
             }
         };
@@ -22,12 +22,17 @@ function makeRequest() {
 function updateCartQuantity() {
     let totalQuantity = 0;
     let itemQuantity;
-    let data = JSON.parse(localStorage.getItem('item'));
-    for (let i = 0; i < data.length; i++) {
-        let item = data[i];
-        itemQuantity = item.quantity;
-        totalQuantity = totalQuantity + Number(itemQuantity);
-        document.getElementById('cart').innerHTML = 'Cart (' + totalQuantity + ')';
+    if (localStorage.length === 0) {
+        return false
+    } else {
+        let data = JSON.parse(localStorage.getItem('item'));
+        for (let i = 0; i < data.length; i++) {
+            let item = data[i];
+            itemQuantity = item.quantity;
+            totalQuantity = totalQuantity + Number(itemQuantity);
+            document.getElementById('cart').innerHTML = 'Cart (' + totalQuantity + ')';
+        };
+        return true
     };
 };
 updateCartQuantity();

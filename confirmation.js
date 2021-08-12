@@ -1,6 +1,16 @@
+//Accessing data from local storage
+let data = JSON.parse(localStorage.getItem('order'));
+
+//Redirect to home page
+function redirect() {
+    if (data === null) {
+        window.location.href = 'index.html';
+    };
+};
+redirect();
+
 //Displaying unique order number
 function displayOrderNumber() {
-    let data = JSON.parse(localStorage.getItem('order'));
     let price = JSON.parse(localStorage.getItem('totalPrice'));
     const order = document.getElementById('order');
 
@@ -16,5 +26,7 @@ function displayOrderNumber() {
     const totalPrice = document.createElement('p');
     totalPrice.innerHTML = price;
     order.appendChild(totalPrice);
+
+    localStorage.clear();
 };
 displayOrderNumber();
