@@ -27,7 +27,6 @@ function updateCartQuantity() {
         let item = data[i];
         itemQuantity = item.quantity;
         totalQuantity = totalQuantity + Number(itemQuantity);
-        console.log(totalQuantity);
         document.getElementById('cart').innerHTML = 'Cart (' + totalQuantity + ')';
     };
 };

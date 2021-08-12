@@ -1,6 +1,6 @@
 //Populating items from local storage in cart
 function displayCart() {
-    let removeItem = document.getElementsByClassName('btn-danger')
+    let removeItem = document.getElementsByClassName('btn-danger');
     let item = JSON.parse(localStorage.getItem('item'));
     for (let i = 0; i < item.length; i++) {
         let data = item[i];
@@ -66,30 +66,66 @@ displayCart();
 
 //Accessing each form field
 const detailsForm = document.getElementById('detailsForm');
-const firstName = document.getElementById('firstName');
-const surname = document.getElementById('surname');
-const email = document.getElementById('email');
-const address = document.getElementById('address');
-const city = document.getElementById('city');
-const postcode = document.getElementById('postcode');
+let firstName = document.getElementById('firstName');
+let surname = document.getElementById('surname');
+let email = document.getElementById('email');
+let address = document.getElementById('address');
+let city = document.getElementById('city');
+let postcode = document.getElementById('postcode');
+
 
 //Validating form inputs
 function checkForm() {
-    const firstNameValue = firstName.value.trim();
-    const surnameValue = surname.value.trim();
-    const emailValue = email.value.trim();
-    const addressValue = address.value.trim();
-    const cityValue = city.value.trim();
-    const postcodeValue = postcode.value.trim();
+    firstNameValue = firstName.value.trim();
+    surnameValue = surname.value.trim();
+    emailValue = email.value.trim();
+    addressValue = address.value.trim();
+    cityValue = city.value.trim();
+    postcodeValue = postcode.value.trim();
     if (firstNameValue === '' || surnameValue === '' || emailValue === '' || addressValue === '' || cityValue === '' || postcodeValue === '') {
-        alert('Some details are missing!')
+        alert('Some details are missing!');
+        return false
     } else {
-        window.location.href = 'confirmation.html';
+        return true
     };
 };
+
+//POST request to update contact and product list
 detailsForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    checkForm();
+    let totalPrice = document.getElementById('totalPrice').innerHTML;
+    let productArray = JSON.parse(localStorage.getItem('item'));
+    let productId = productArray.map(item => item.id);
+    let object = {
+        contact: {
+            firstName: firstName.value.trim(),
+            lastName: surname.value.trim(),
+            email: email.value.trim(),
+            city: city.value.trim(),
+            address: address.value.trim(),
+        },
+        products: productId,
+    };
+    console.log(totalPrice);
+    if (checkForm()) { //Check if form is valid
+        fetch('http://localhost:3000/api/cameras/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(object), //POST request with object(contact+item list)
+        }).then(res => res.json()).then(data => { //Response with data including Order ID
+            console.log(data);
+            if (data === null) {
+                alert('No items in cart');
+            } else {
+                localStorage.setItem('order', JSON.stringify(data));
+                localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
+                localStorage.removeItem('item');
+            };
+            window.location.href = 'confirmation.html';
+        });
+    };
 });
 
 //Calculating total Price
@@ -100,7 +136,6 @@ function displayTotalPrice() {
     let totalItemsPrice = 0;
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
-        console.log(item);
         itemPrice = Number(item.price.replace('$', '')) * Number(item.quantity);
         totalItemsPrice = totalItemsPrice + itemPrice;
         totalPrice.innerHTML = 'Total price: ' + totalItemsPrice + '$';

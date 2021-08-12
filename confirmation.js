@@ -1,13 +1,20 @@
-//creating unique order number
-// function displayOrderNumber() {
-//     let dateStamp = Date.now().toString();
-//     let data = JSON.parse(localStorage.getItem('item'));
-//     const orderNumber = document.getElementById('orderId');
-//     if (data.length > 0) {
-//     orderNumber.innerHTML = dateStamp + '-' + data.length;
-//     } else {
-//         orderNumber.innerHTML = 'Go to home page.';
-//     };
-//     localStorage.clear();
-// };
-// displayOrderNumber();
+//Displaying unique order number
+function displayOrderNumber() {
+    let data = JSON.parse(localStorage.getItem('order'));
+    let price = JSON.parse(localStorage.getItem('totalPrice'));
+    const order = document.getElementById('order');
+
+    //Create elements
+    const thankYou = document.createElement('h3');
+    thankYou.innerHTML = 'Thank you for shopping with us!';
+    order.appendChild(thankYou);
+
+    const orderId = document.createElement('p');
+    orderId.innerHTML = 'Order ID: ' + data.orderId;
+    order.appendChild(orderId);
+
+    const totalPrice = document.createElement('p');
+    totalPrice.innerHTML = price;
+    order.appendChild(totalPrice);
+};
+displayOrderNumber();
